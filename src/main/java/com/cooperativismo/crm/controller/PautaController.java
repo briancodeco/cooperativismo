@@ -1,4 +1,4 @@
-package com.cooperativismo.crm.controller.v1;
+package com.cooperativismo.crm.controller;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
- @RequestMapping(value = "/v1/pauta")
+ @RequestMapping(value = "/pauta")
 public class PautaController {
 	@Autowired(required = false)
   PautaService pautaService;

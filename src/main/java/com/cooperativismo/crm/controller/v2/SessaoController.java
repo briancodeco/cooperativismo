@@ -1,4 +1,4 @@
-package com.cooperativismo.crm.controller;
+package com.cooperativismo.crm.controller.v2;
 
 import java.util.Calendar;
 import java.util.List;
@@ -28,7 +28,7 @@ import com.cooperativismo.crm.service.VotoService;
 
 
 @RestController
-@RequestMapping(value = "/sessao")
+@RequestMapping(value = "/v2/sessao")
 public class SessaoController {
 	@Autowired(required = false)
     PautaService pautaService;

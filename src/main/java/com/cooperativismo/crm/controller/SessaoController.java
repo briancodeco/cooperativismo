@@ -39,7 +39,7 @@ public class SessaoController {
 	VotoService votoService;
 	
 	@PostMapping("/cadastrar")	
-	public ResponseEntity<?> cadastrar(@RequestParam long id,@RequestParam int tempo) throws Exception {
+	public ResponseEntity<?> cadastrar(@RequestParam long id,@RequestParam(required = false, defaultValue = "1") int tempo) throws Exception {
 		MessageApi messageApi = new MessageApi();
 		try {
 			 Optional<Pauta> pauta = pautaService.findById(id);	
@@ -48,10 +48,7 @@ public class SessaoController {
 					p.setId(pauta.get().getId());
 					p.setDataCadastro(pauta.get().getDataCadastro());
 					p.setDescricao(pauta.get().getDescricao());
-					p.setVotos(pauta.get().getVotos());
-					if(tempo == 0) {
-						tempo = 1;
-					}
+					p.setVotos(pauta.get().getVotos());					
 					Sessao sessao = new Sessao(Calendar.getInstance(),tempo,p);			
 					return new ResponseEntity<>(sessaoService.cadastrar(sessao),HttpStatus.OK);
 						}	

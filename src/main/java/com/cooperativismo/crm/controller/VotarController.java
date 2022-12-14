@@ -34,7 +34,7 @@ public class VotarController {
    VotoService votoService;
    		
    
-   		@PostMapping	
+   		@PostMapping("/cadastrar")		
 		public ResponseEntity<?> votar(@RequestParam long id,@RequestParam String votar,@RequestParam String identificador) throws Exception {
    			MessageApi messageApi = new MessageApi();
    			Voto verificacao = new Voto();
@@ -45,7 +45,7 @@ public class VotarController {
 					messageApi.setMessage("Você Já votou");
 				}else {
 					sessao.get().getDataCadastro().add(Calendar.MINUTE, sessao.get().getTempoExpira());
-					if(sessao.get().getDataCadastro().after(Calendar.getInstance())) {
+					if(sessao.get().getDataCadastro().before(Calendar.getInstance())) {
 						Voto voto = new Voto();
 						voto.setDataCadastro(Calendar.getInstance());			
 						voto.setIdentificador(identificador);

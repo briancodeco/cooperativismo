@@ -1,12 +1,10 @@
-package com.cooperativismo.crm.controller;
+package com.cooperativismo.crm.controller.v2;
 
 
 import org.springframework.web.bind.annotation.*;
 
 import com.cooperativismo.crm.model.MessageApi;
 import com.cooperativismo.crm.model.Pauta;
-import com.cooperativismo.crm.model.Voto;
-import com.cooperativismo.crm.model.VotosVO;
 import com.cooperativismo.crm.service.PautaService;
 import com.cooperativismo.crm.service.VotoService;
 import java.util.Calendar;
@@ -18,15 +16,16 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
- @RequestMapping(value = "/pauta")
-public class PautaController {
+ @RequestMapping(value = "/pauta/v2")
+public class PautaControllerV2 {
 	@Autowired(required = false)
   PautaService pautaService;
 	@Autowired(required = false)
  VotoService votoService;
-	
+			
+		
 		@PostMapping(value = "/cadastrar")
-		public ResponseEntity<?> hello(@RequestParam String descricao) {
+		public ResponseEntity<?> cadastrarV2(@RequestParam String descricao) {
 			Pauta pauta = new Pauta();
 			MessageApi messageApi = new MessageApi();
 			try {				 

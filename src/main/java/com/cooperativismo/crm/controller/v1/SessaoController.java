@@ -1,4 +1,4 @@
-package com.cooperativismo.crm.controller;
+package com.cooperativismo.crm.controller.v1;
 
 import java.util.Calendar;
 import java.util.List;
@@ -28,7 +28,7 @@ import com.cooperativismo.crm.service.VotoService;
 
 
 @RestController
-@RequestMapping(value = "/sessao")
+@RequestMapping(value = "/sessao/v1")
 public class SessaoController {
 	@Autowired(required = false)
     PautaService pautaService;
@@ -39,7 +39,7 @@ public class SessaoController {
 	VotoService votoService;
 	
 	@PostMapping("/cadastrar")	
-	public ResponseEntity<?> cadastrar(@RequestParam long id,@RequestParam(required = false, defaultValue = "1") int tempo) throws Exception {
+	public ResponseEntity<?> cadastrarV1(@RequestParam long id,@RequestParam(required = false, defaultValue = "1") int tempo) throws Exception {
 		MessageApi messageApi = new MessageApi();
 		try {
 			 Optional<Pauta> pauta = pautaService.findById(id);	
@@ -89,7 +89,7 @@ public class SessaoController {
 			 List<Voto> votos  = votoService.findBySessao_id(id);
 				for(Voto v : votos) {
 					
-					if(v.getDescricao().equals("sim")) {
+					if(v.getDescricao().equalsIgnoreCase("sim")) {
 						contadorsim = contadorsim + 1;	
 					}else {
 						contadorNao = contadorNao + 1;

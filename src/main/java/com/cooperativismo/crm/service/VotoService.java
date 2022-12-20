@@ -11,6 +11,7 @@ import com.cooperativismo.crm.repository.VotoRepository;
 
 @Service
 public class VotoService {
+	
 	@Autowired
 	VotoRepository votoRepository;
 	

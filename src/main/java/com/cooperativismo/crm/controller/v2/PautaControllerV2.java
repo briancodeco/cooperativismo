@@ -42,12 +42,8 @@ public class PautaControllerV2 {
 		@GetMapping("/listar")
 	    public List<Pauta> listar() throws Exception {
 	        return pautaService.getAll();
-	    }
+	    }		
 		
-		@GetMapping("/teste")
-	    public String teste() {
-	        return "teste";
-	    }
 		
 		@GetMapping(value = "/buscar/{id}")
 	    public ResponseEntity<?> byId(@PathVariable("id") long id) throws Exception {

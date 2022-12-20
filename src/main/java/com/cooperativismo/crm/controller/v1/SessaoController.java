@@ -3,20 +3,15 @@ package com.cooperativismo.crm.controller.v1;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.cooperativismo.crm.model.MessageApi;
 import com.cooperativismo.crm.model.Pauta;
 import com.cooperativismo.crm.model.Sessao;
@@ -33,8 +28,7 @@ public class SessaoController {
 	@Autowired(required = false)
     PautaService pautaService;
 	@Autowired(required = false)
-	SessaoService sessaoService;
-	
+	SessaoService sessaoService;	
 	@Autowired(required = false)
 	VotoService votoService;
 	
@@ -60,8 +54,17 @@ public class SessaoController {
 	
 	
 	@GetMapping("/listar")
-    public List<Sessao> listar() throws Exception {
-        return sessaoService.getAll();
+    public ResponseEntity<?> listar() throws Exception {       
+        MessageApi messageApi = new MessageApi();
+		try {
+		List<Sessao> lista = sessaoService.getAll();
+		if (!(lista.isEmpty()))
+			return new ResponseEntity<>(lista,HttpStatus.OK);				
+		}catch (Exception e) {
+			messageApi.setMessage(e.getMessage());
+		}
+		return new ResponseEntity<>(messageApi,HttpStatus.BAD_GATEWAY);			
+       
     }
 	
 	
@@ -79,7 +82,7 @@ public class SessaoController {
        
     }
 	
-	@GetMapping("/contarVotos/{id}")
+	@GetMapping("/contar-votos/{id}")
     public ResponseEntity<?>  contarVotos(@PathVariable("id") long id) throws Exception {
 		int contadorsim = 0;
 		int contadorNao = 0;	

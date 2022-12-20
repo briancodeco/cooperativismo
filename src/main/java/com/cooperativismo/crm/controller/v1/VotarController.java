@@ -3,24 +3,18 @@ package com.cooperativismo.crm.controller.v1;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.cooperativismo.crm.model.MessageApi;
-import com.cooperativismo.crm.model.Pauta;
 import com.cooperativismo.crm.model.Sessao;
 import com.cooperativismo.crm.model.Voto;
-import com.cooperativismo.crm.service.PautaService;
 import com.cooperativismo.crm.service.SessaoService;
 import com.cooperativismo.crm.service.VotoService;
 
@@ -65,8 +59,17 @@ public class VotarController {
 		}
    		
    		@GetMapping("/listar")
-	    public List<Voto> listar() throws Exception {
-	        return votoService.findAll();
+	    public ResponseEntity<?> listar() throws Exception {	        
+	        MessageApi messageApi = new MessageApi();
+			try {
+			List<Voto> lista = votoService.findAll();
+			if (!(lista.isEmpty()))
+				return new ResponseEntity<>(lista,HttpStatus.OK);				
+			}catch (Exception e) {
+				messageApi.setMessage(e.getMessage());
+			}
+			return new ResponseEntity<>(messageApi,HttpStatus.BAD_GATEWAY);			
+	       
 	    }
    		
    		@GetMapping(value = "/buscar/{id}")

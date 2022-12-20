@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cooperativismo.crm.model.MessageApi;
 import com.cooperativismo.crm.model.Pauta;
-import com.cooperativismo.crm.model.Voto;
-import com.cooperativismo.crm.model.VotosVO;
 import com.cooperativismo.crm.service.PautaService;
 import com.cooperativismo.crm.service.VotoService;
 import java.util.Calendar;
@@ -41,9 +39,19 @@ public class PautaController {
 		}		
 		
 		@GetMapping("/listar")
-	    public List<Pauta> listar() throws Exception {
-	        return pautaService.getAll();
-	    }		
+	    public ResponseEntity<?> listar() throws Exception {	            
+	        MessageApi messageApi = new MessageApi();
+			try {
+			List<Pauta> lista = pautaService.getAll();
+			if (!(lista.isEmpty()))
+				return new ResponseEntity<>(lista,HttpStatus.OK);				
+			}catch (Exception e) {
+				messageApi.setMessage(e.getMessage());
+			}
+			return new ResponseEntity<>(messageApi,HttpStatus.BAD_GATEWAY);			
+	       
+	    }   
+		
 		
 		
 		@GetMapping(value = "/buscar/{id}")
